@@ -27,8 +27,8 @@ pipeline {
         stage('Quality-Gate') {
             steps{
                 timeout(10) {
-                        waitForQualityGate abortPipeline true 
-                    }
+                waitForQualityGate abortPipeline true 
+                }
                 
             }
         }
@@ -46,9 +46,8 @@ pipeline {
         stage('Deploy')
             steps{
                 sh '''
-                    cd FlightReservationApplication
-                    kubectl apply -f k8s/
-
+                cd FlightReservationApplication
+                kubectl apply -f k8s/
                 '''
             }
 
