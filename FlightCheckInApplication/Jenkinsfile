@@ -1,0 +1,110 @@
+pipeline {
+    agent any
+    
+    environment {
+        DOCKER_REGISTRY = 'your-docker-registry'
+        DOCKER_IMAGE_NAME = 'flight-checkin-app'
+        DOCKER_IMAGE_TAG = "${BUILD_NUMBER}"
+        MAVEN_HOME = tool 'Maven'
+        JAVA_HOME = tool 'JDK17'
+        SONAR_HOST_URL = 'http://your-sonarqube-server:9000'
+        SONAR_TOKEN = credentials('sonar-token')
+    }
+    
+    stages {
+        stage('PULL') {
+            steps {
+                checkout scm
+            }
+        }
+        
+        stage('BUILD') {
+            steps {
+                sh '''
+                    ${MAVEN_HOME}/bin/mvn clean package -DskipTests
+                '''
+            }
+        }
+        
+        stage('QA Test') {
+            steps {
+                sh '''
+                    ${MAVEN_HOME}/bin/mvn test
+                '''
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
+        }
+        
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh '''
+                        ${MAVEN_HOME}/bin/mvn sonar:sonar \
+                        -Dsonar.projectKey=flight-checkin-app \
+                        -Dsonar.java.binaries=target/classes \
+                        -Dsonar.sources=src/main/java \
+                        -Dsonar.tests=src/test/java \
+                        -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
+                        -Dsonar.host.url=${SONAR_HOST_URL} \
+                        -Dsonar.login=${SONAR_TOKEN}
+                    '''
+                }
+            }
+        }
+        
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 1, unit: 'HOURS') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+        
+        stage('DOCKER BUILD') {
+            steps {
+                script {
+                    docker.build("${DOCKER_REGISTRY}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}")
+                }
+            }
+        }
+        
+        stage('DOCKER PUSH') {
+            steps {
+                script {
+                    docker.withRegistry('https://${DOCKER_REGISTRY}', 'docker-credentials') {
+                        docker.image("${DOCKER_REGISTRY}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}").push()
+                    }
+                }
+            }
+        }
+        
+        stage('DEPLOY') {
+            steps {
+                script {
+                    // Assuming you're using Kubernetes for deployment
+                    sh '''
+                        kubectl set image deployment/flight-checkin-app \
+                        flight-checkin-app=${DOCKER_REGISTRY}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} \
+                        --namespace=flight-checkin
+                    '''
+                }
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
+        always {
+            cleanWs()
+        }
+    }
+} 

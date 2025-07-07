@@ -1,0 +1,308 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+header {
+  background: linear-gradient(to right #ff5001, #ff8b00);
+  color: #000;
+  padding: 20px 0;
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  margin-left: 10px;
+  font-size: 30px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+}
+
+nav ul li {
+  margin: 0 15px;
+}
+
+nav a {
+  color: black;
+  text-decoration: none;
+  font-weight: bolder;
+  font-size: 15px;
+  padding: 8px;
+  border-radius: 30px;
+}
+
+nav a:hover {
+  background-color: white;
+  color: black;
+}
+
+.Banner {
+  height: 650px;
+  padding-top: 50px;
+  padding-left: 50px;
+}
+
+.Banner img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.login-form {
+  height: 550px;
+  padding-left: 200px;
+  padding-right: 200px;
+}
+
+.login-form form {
+  background-color: #f1e9e9;
+}
+
+.login-form h2 {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.login-form button {
+  margin-left: 10px;
+}
+
+.search-form {
+  padding-right: 30px;
+}
+
+.search-form input {
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.about-section,
+.contact-section {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+footer {
+  background-color: #ff8b00;
+  color: #000;
+  text-align: center;
+  padding: 20px 0;
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.register {
+  padding-left: 200px;
+  padding-right: 200px;
+  height: 535px;
+}
+
+.register-form {
+  padding: 20px;
+  background-color: #f1e9e9;
+}
+
+.profile {
+  padding-left: 200px;
+  padding-right: 200px;
+  height: 550px;
+}
+
+.profile-form {
+  padding: 20px;
+  background-color: #f1e9e9;
+}
+
+.banner-2 {
+  padding-left: 100px;
+  padding-top: 100px;
+}
+.banner-2 p {
+  font-size: 30px;
+  color: #ff8b00;
+}
+.banner-2 h1 {
+  font-weight: bolder;
+  font-size: 100px;
+}
+
+.flight-search-from {
+  padding-left: 200px;
+  padding-right: 200px;
+  height: 550px;
+}
+.hero {
+  height: 500px;
+  width: 700px;
+}
+
+.flight-search-from form {
+  background-color: #f1e9e9;
+}
+.booking {
+  padding-left: 200px;
+  padding-right: 200px;
+  height: 550px;
+}
+.booking-list {
+  min-height: 550px;
+}
+
+.booking-list table {
+  border-radius: 25px;
+}
+
+.update {
+  padding-left: 200px;
+  padding-right: 200px;
+  height: 550px;
+}
+
+.update form {
+  background-color: #f1e9e9;
+}
+
+.contact {
+  padding-top: 100px;
+  padding-left: 200px;
+  padding-right: 200px;
+  height: 550px;
+}
+
+.contact p {
+  font-size: 20px;
+}
+
+.contact input {
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-right: none;
+  border-top-left-radius: 5px; /* Top-left corner */
+  border-bottom-left-radius: 5px; /* Bottom-left corner */
+}
+
+.contact button {
+  border-left: none;
+  padding: 10px;
+  padding-left: 17px;
+  padding-right: 17px;
+  background-color: white;
+  color: #ff5001;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.contact button:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.change-button {
+  padding-bottom: 14px;
+  padding-top: 14px;
+  position: absolute;
+  top: 220px;
+  right: 231px;
+  border-radius: 50px;
+}
+
+.payment {
+  padding-left: 350px;
+  padding-right: 80px;
+  padding-top: 80px;
+  height: 550px;
+}
+
+.payment-form {
+  height: 400px;
+  border-radius: 20px;
+}
+
+.left {
+  padding: 100px;
+  background-color: #eae1de;
+  border-top-left-radius: 10px; /* Top-left corner */
+  border-bottom-left-radius: 10px; /* Bottom-left corner */
+}
+.right {
+  padding: 10px;
+  background-color: #eae1de;
+  border-top-right-radius: 10px; /* Top-left corner */
+  border-bottom-right-radius: 10px; /* Bottom-left corner */
+}
+
+.card {
+  background-color: #a789f9;
+  height: 180px;
+  padding: 20px;
+}
+
+.admin {
+  padding-top: 100px;
+  padding-left: 200px;
+  padding-right: 200px;
+  min-height: 550px;
+}
+
+.admin-panel {
+  padding: 10px;
+  height: 250px;
+  background-color: #eae1de;
+  border-radius: 15px;
+  box-shadow: 0px 5px 5px 0px black;
+}
+.logo {
+  width: 150px;
+  height: 100px;
+  background-color: white;
+}
+
+.admin-panel i {
+  font-size: 100px;
+}
+
+.add-flight {
+  min-height: 550px;
+  padding-top: 30px;
+  padding-left: 200px;
+  padding-right: 200px;
+}
+
+.checkin {
+  min-height: 550px;
+  padding-top: 30px;
+  padding-left: 200px;
+  padding-right: 200px;
+}
+.btn {
+  background-color: orange;
+  color: #fff;
+}
+.btn:hover {
+  background-color: #ff8b00;
+}
+
+.checkin-done {
+  min-height: 550px;
+  padding-top: 130px;
+  padding-left: 200px;
+  padding-right: 200px;
+  text-align: center;
+}

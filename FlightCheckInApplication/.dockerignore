@@ -1,0 +1,43 @@
+# Git
+.git
+.gitignore
+
+# Maven
+target/
+!target/*.jar
+.mvn/
+mvnw
+mvnw.cmd
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+.project
+.classpath
+.settings/
+
+# Logs
+logs/
+*.log
+
+# Test files
+src/test/
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Documentation
+*.md
+LICENSE
+
+# Environment files
+.env
+*.properties
+!src/main/resources/application.properties
+
+# Temporary files
+*.tmp
+*.swp
+*~ 

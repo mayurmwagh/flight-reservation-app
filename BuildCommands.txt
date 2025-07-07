@@ -1,0 +1,22 @@
+WINDOWS command prompt-------example
+set SPRING_APPLICATION_NAME = 
+
+mnvw package
+
+WINDOWS Powershell-----------------------------------------------------
+$env:DATASOURCE_URL="jdbc:mysql://localhost:3306/flightdb"
+$env:DATASOURCE_USER="root"
+$env:DATASOURCE_PASSWORD="root"
+$env:FRONTEND_URL="http://localhost:3000"
+
+./mvnw clean package 
+
+
+------------------------------------------------------
+Checkin env
+
+$env:DATASOURCE_URL="jdbc:mysql://localhost:3306/checkin_db"
+$env:DATASOURCE_USER="root"
+$env:DATASOURCE_PASSWORD="root"
+$env:FRONTEND_URL="http://localhost:3000"
+$env:BOOKING_SERVICE_URL="http://localhost:8080/api/bookings"

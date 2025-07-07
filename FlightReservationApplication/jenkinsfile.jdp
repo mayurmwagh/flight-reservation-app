@@ -1,0 +1,64 @@
+pipeline {
+    agent any
+    stages {
+        stage('PULL') {
+            steps{
+                git branch: 'main', url: 'https://github.com/shubhamkalsait/Flight-reservation.git'
+            }
+        }
+        stage('BUILD') {
+            steps{
+                sh '''
+                cd FlightReservationApplication
+                mvn clean package
+                '''
+            }
+        }
+        stage('QA-TEST') {
+            steps{
+                withSonarQubeEnv(installationName: 'sonarqube', credentialsId: 'sonar-cred') {
+                    sh '''
+                    cd FlightReservationApplication
+                    mvn sonar:sonar -Dsonar.projectKey=flight-reservation-backend
+                '''
+                }
+            }
+        }
+        stage('QUALITYGATE'){
+            steps{
+                timeout(10) {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+        stage('DOCKER-BUILD') {
+            steps{
+                sh'''
+                    cd FlightReservationApplication
+                    docker build . -t shubhamkalsait1/flight-reservation-app:latest
+                    docker push shubhamkalsait1/flight-reservation-app:latest
+                    docker rmi `docker image list -aq`
+                '''
+            }
+        }
+        stage('DEPLOY') {
+            steps{
+                sh'''
+                    cd FlightReservationApplication
+                    kubectl apply -f k8s/
+                '''
+            }
+        }
+    }
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
+        always {
+            cleanWs()
+        }
+    }
+}

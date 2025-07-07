@@ -1,0 +1,261 @@
+CREATE DATABASE flightdb;
+USE flightdb;
+
+CREATE TABLE User (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(100) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    gender VARCHAR(10),
+    contactNumber VARCHAR(15),
+    age INT,
+);
+
+CREATE TABLE User_Roles (
+    user_id BIGINT NOT NULL,
+    roles VARCHAR(50),
+    PRIMARY KEY (user_id, role),
+    FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
+);
+
+CREATE TABLE Flight (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    flightNumber VARCHAR(50) NOT NULL,
+    origin VARCHAR(100) NOT NULL,
+    destination VARCHAR(100) NOT NULL,
+    departureDate DATE NOT NULL,
+    departureTime DATETIME NOT NULL
+);
+
+CREATE TABLE Booking (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT,
+    flight_id BIGINT,
+    booking_date DATE NOT NULL,
+    seat_number VARCHAR(100) NOT NULL,			
+    
+    FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE,
+    FOREIGN KEY (flight_id) REFERENCES Flight(id) ON DELETE CASCADE
+);
+
+CREATE INDEX idx_user_id ON Booking(user_id);
+CREATE INDEX idx_flight_id ON Booking(flight_id);
+
+
+-- Insert some flight data manually
+
+-- Mumbai to Delhi flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('AI101', 'Mumbai', 'Delhi', '2024-11-20', '2024-11-20 06:30:00');
+
+-- Bangalore to Chennai flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('6E202', 'Bangalore', 'Chennai', '2024-11-21', '2024-11-21 09:00:00');
+
+-- Hyderabad to Kolkata flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('SG303', 'Hyderabad', 'Kolkata', '2024-11-22', '2024-11-22 14:30:00');
+
+-- Jaipur to Pune flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('AI404', 'Jaipur', 'Pune', '2024-11-23', '2024-11-23 18:00:00');
+
+-- Delhi to Goa flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('6E505', 'Delhi', 'Goa', '2024-11-24', '2024-11-24 12:45:00');
+
+-- Chennai to Mumbai flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('AI606', 'Chennai', 'Mumbai', '2024-11-25', '2024-11-25 20:30:00');
+
+-- Kolkata to Ahmedabad flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('SG707', 'Kolkata', 'Ahmedabad', '2024-11-26', '2024-11-26 07:15:00');
+
+-- Pune to Jaipur flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('AI808', 'Pune', 'Jaipur', '2024-11-27', '2024-11-27 13:30:00');
+
+-- Goa to Hyderabad flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('6E909', 'Goa', 'Hyderabad', '2024-11-28', '2024-11-28 17:00:00');
+
+-- Ahmedabad to Bangalore flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('SG010', 'Ahmedabad', 'Bangalore', '2024-11-29', '2024-11-29 21:45:00');
+
+-- Delhi to Bangalore flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('AI111', 'Delhi', 'Bangalore', '2024-11-30', '2024-11-30 08:00:00');
+
+-- Mumbai to Hyderabad flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('6E112', 'Mumbai', 'Hyderabad', '2024-12-01', '2024-12-01 10:45:00');
+
+-- Chennai to Kolkata flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('SG113', 'Chennai', 'Kolkata', '2024-12-02', '2024-12-02 15:30:00');
+
+-- Bangalore to Jaipur flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('AI114', 'Bangalore', 'Jaipur', '2024-12-03', '2024-12-03 09:15:00');
+
+-- Hyderabad to Pune flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('6E115', 'Hyderabad', 'Pune', '2024-12-04', '2024-12-04 07:30:00');
+
+-- Kolkata to Mumbai flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('SG116', 'Kolkata', 'Mumbai', '2024-12-05', '2024-12-05 16:00:00');
+
+-- Goa to Delhi flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('AI117', 'Goa', 'Delhi', '2024-12-06', '2024-12-06 11:20:00');
+
+-- Pune to Chennai flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('6E118', 'Pune', 'Chennai', '2024-12-07', '2024-12-07 18:45:00');
+
+-- Ahmedabad to Jaipur flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('SG119', 'Ahmedabad', 'Jaipur', '2024-12-08', '2024-12-08 06:15:00');
+
+-- Jaipur to Delhi flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('AI120', 'Jaipur', 'Delhi', '2024-12-09', '2024-12-09 14:00:00');
+
+-- Bangalore to Mumbai flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('6E121', 'Bangalore', 'Mumbai', '2024-12-10', '2024-12-10 13:30:00');
+
+-- Delhi to Kolkata flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('SG122', 'Delhi', 'Kolkata', '2024-12-11', '2024-12-11 09:00:00');
+
+-- Chennai to Hyderabad flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('AI123', 'Chennai', 'Hyderabad', '2024-12-12', '2024-12-12 19:30:00');
+
+-- Mumbai to Goa flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('6E124', 'Mumbai', 'Goa', '2024-12-13', '2024-12-13 07:45:00');
+
+-- Pune to Ahmedabad flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('SG125', 'Pune', 'Ahmedabad', '2024-12-14', '2024-12-14 16:15:00');
+
+-- Goa to Jaipur flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('AI126', 'Goa', 'Jaipur', '2024-12-15', '2024-12-15 20:30:00');
+
+-- Kolkata to Bangalore flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('6E127', 'Kolkata', 'Bangalore', '2024-12-16', '2024-12-16 05:00:00');
+
+-- Ahmedabad to Hyderabad flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('SG128', 'Ahmedabad', 'Hyderabad', '2024-12-17', '2024-12-17 14:45:00');
+
+-- Chennai to Delhi flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('AI129', 'Chennai', 'Delhi', '2024-12-18', '2024-12-18 12:30:00');
+
+-- Hyderabad to Goa flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('6E130', 'Hyderabad', 'Goa', '2024-12-19', '2024-12-19 08:15:00');
+
+-- Indore to Mumbai flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('AI131', 'Indore', 'Mumbai', '2024-12-20', '2024-12-20 10:30:00');
+
+-- Indore to Delhi flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('6E132', 'Indore', 'Delhi', '2024-12-21', '2024-12-21 07:45:00');
+
+-- Indore to Bangalore flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('SG133', 'Indore', 'Bangalore', '2024-12-22', '2024-12-22 09:15:00');
+
+-- Indore to Hyderabad flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('AI134', 'Indore', 'Hyderabad', '2024-12-23', '2024-12-23 14:00:00');
+
+-- Indore to Kolkata flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('6E135', 'Indore', 'Kolkata', '2024-12-24', '2024-12-24 11:30:00');
+
+-- Indore to Pune flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('SG136', 'Indore', 'Pune', '2024-12-25', '2024-12-25 08:00:00');
+
+-- Indore to Jaipur flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('AI137', 'Indore', 'Jaipur', '2024-12-26', '2024-12-26 06:15:00');
+
+-- Indore to Ahmedabad flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('6E138', 'Indore', 'Ahmedabad', '2024-12-27', '2024-12-27 16:45:00');
+
+-- Indore to Goa flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('SG139', 'Indore', 'Goa', '2024-12-28', '2024-12-28 19:00:00');
+
+-- Indore to Chennai flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('AI140', 'Indore', 'Chennai', '2024-12-29', '2024-12-29 12:30:00');
+
+-- Indore to Lucknow flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('6E141', 'Indore', 'Lucknow', '2024-12-30', '2024-12-30 08:30:00');
+
+-- Indore to Surat flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('SG142', 'Indore', 'Surat', '2025-01-01', '2025-01-01 17:00:00');
+
+-- Indore to Vadodara flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('AI143', 'Indore', 'Vadodara', '2025-01-02', '2025-01-02 09:00:00');
+
+-- Indore to Nagpur flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('6E144', 'Indore', 'Nagpur', '2025-01-03', '2025-01-03 11:30:00');
+
+-- Indore to Bhubaneswar flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('SG145', 'Indore', 'Bhubaneswar', '2025-01-04', '2025-01-04 10:45:00');
+
+-- Indore to Ranchi flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('AI146', 'Indore', 'Ranchi', '2025-01-05', '2025-01-05 08:00:00');
+
+-- Indore to Varanasi flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('6E147', 'Indore', 'Varanasi', '2025-01-06', '2025-01-06 14:30:00');
+
+-- Indore to Madurai flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('SG148', 'Indore', 'Madurai', '2025-01-07', '2025-01-07 16:00:00');
+
+-- Indore to Visakhapatnam flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('AI149', 'Indore', 'Visakhapatnam', '2025-01-08', '2025-01-08 11:00:00');
+
+-- Indore to Patna flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('6E150', 'Indore', 'Patna', '2025-01-09', '2025-01-09 19:15:00');
+
+-- Indore to Dehradun flight
+INSERT INTO Flight (flightNumber, origin, destination, departureDate, departureTime)
+VALUES ('SG151', 'Indore', 'Dehradun', '2025-01-10', '2025-01-10 07:45:00');
+
+
+-------------------------------------------------------------------------
+
+Check_in DB
+
+CREATE TABLE check_in (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    booking_id BIGINT NOT NULL,
+    number_of_bags VARCHAR(255),
+    check_in_time DATETIME
+);

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flight-reservation-app
+  namespace: flight-reservation
+  labels:
+    app: flight-reservation-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: flight-reservation-app
+  template:
+    metadata:
+      labels:
+        app: flight-reservation-app
+    spec:
+      containers:
+      - name: flight-reservation-app
+        image: shubhamkalsait1/flight-reservation-app:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
