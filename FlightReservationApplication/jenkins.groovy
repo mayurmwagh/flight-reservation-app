@@ -18,8 +18,8 @@ pipeline {
             steps{
                 withSonarQubeEnv(installationName: 'sonar', credentialsId: 'sonar-cred') {
                 sh '''
-                 cd FlightReservationApplication
-                 mvn sonar:sonar -Dsonar.projectKey=flight-reservation-backend 
+                    cd FlightReservationApplication
+                    mvn sonar:sonar -Dsonar.projectKey=flight-reservation-backend 
                 '''
                 }
             }
@@ -46,8 +46,8 @@ pipeline {
         stage('Deploy')
             steps{
                 sh '''
-                cd FlightReservationApplication
-                kubectl apply -f k8s/
+                    cd FlightReservationApplication
+                    kubectl apply -f k8s/
                 '''
             }
 
