@@ -8,19 +8,49 @@ pipeline {
         }
          stage('Build') {
             steps{
-                echo 'Building the application...'
+                sh '''
+                    cd FlightReservationApplication
+                    mvn clean package
+                '''
             }
         }
-         stage('Test') {
+         stage('Qa-Test') {
             steps{
-                echo 'testing the application...'
+                withSonarQubeEnv(installationName: 'sonar' credentialsId: 'sonar-cred') {
+                sh '''
+                 cd FlightReservationApplication
+                 mvn sonar:sonar -Dsonar.projectKey=flight-reservation-backend 
+                '''
+                }
             }
         }
-         stage('Deploy') {
+        stage('Quality-Gate') {
             steps{
-                echo 'deploying the application...'
+                timeout(10) {
+                        waitForQualityGate abortPipeline true 
+                    }
+                
             }
         }
+
+         stage('Docker-build') {
+            steps{
+                sh '''
+                    cd FlightReservationApplication
+                    docker build -t mayurmwagh/flight-reservation:latest
+                    docker push mayurmwagh/flight-reservation:latest
+                    docker rmi `docker image list -aq`
+                '''    
+            }
+        }
+        stage('Deploy')
+            steps{
+                sh '''
+                    cd FlightReservationApplication
+                    kubectl apply -f k8s/
+
+                '''
+            }
 
     }
 }
