@@ -27,13 +27,13 @@ pipeline {
         stage('Quality-Gate') {
             steps{
                 timeout(10) {
-                waitForQualityGate abortPipeline true 
+                    waitForQualityGate abortPipeline true 
                 }
                 
             }
         }
 
-         stage('Docker-build') {
+        stage('Docker-build') {
             steps{
                 sh '''
                     cd FlightReservationApplication
