@@ -28,7 +28,7 @@ pipeline {
             steps{
                 sh '''
                     cd FlightReservationApplication
-                    docker build -t mayurwagh/flightreservation-pls-10-12:latest
+                    docker build -t mayurwagh/flightreservation-pls-10-12:latest .
                     docker push mayurwagh/flightreservation-pls-10-12:latest
                     docker rmi mayurwagh/flightreservation-pls-10-12:latest
               '''
