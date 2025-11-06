@@ -24,6 +24,21 @@ pipeline {
                 }
             }
         }
+        stage('Docker-build'){
+            sh '''
+                cd FlightReservationApplication
+                docker build -t mayurwagh/flightreservation-pls-10-12:latest
+                docker push mayurwagh/flightreservation-pls-10-12:latest
+                docker rmi mayurwagh/flightreservation-pls-10-12:latest
+
+            '''
+        }
+        stage('Deploy'){
+            sh '''
+                cd FlightReservationApplication
+                kubectl apply -f k8s/
+            '''
+        }
 
     }
 }
