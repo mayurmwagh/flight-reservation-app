@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('PULL'){
             steps{
-                git branch: 'main', url: 'https://github.com/shubhamkalsait/Flight-reservation.git'
+                git branch: 'main', url: 'https://github.com/mayurmwagh/flight-reservation-app.git'
             }
         }
         stage('BUILD'){
@@ -19,20 +19,10 @@ pipeline {
             steps{
                 sh'''
                 cd frontend
-                aws s3 sync dist/ s3://cbz-frontend-dev-buxxx/ 
+                aws s3 sync dist/ s3://cbdfdsssafdfssdz-front12end-project-bux/ 
                 '''
             }
         }
     }
-    post {
-        success {
-            echo 'Pipeline completed successfully!'
-        }
-        failure {
-            echo 'Pipeline failed!'
-        }
-        always {
-            cleanWs()
-        }
-    }
+
 }
