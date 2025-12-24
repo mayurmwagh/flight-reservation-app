@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: flight-reservation-app
-        image: mayurwagh/flightreservation-pls-10-12:latest
+        image: mayurwagh/flight-reservation12:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080

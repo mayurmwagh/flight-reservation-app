@@ -19,10 +19,10 @@ pipeline {
 
         stage('Qa-Test') {
             steps {
-                withSonarQubeEnv(installationName: 'sonar-qube', credentialsId: 'sonar-token') {
+                withSonarQubeEnv(installationName: 'sonar', credentialsId: 'Sonar-token') {
                     sh '''
                         cd FlightReservationApplication
-                        mvn sonar:sonar -Dsonar.projectKey=flight-reservation-backend
+                        mvn sonar:sonar -Dsonar.projectKey=flight-reservation
                     '''
                 }
             }
@@ -40,9 +40,9 @@ pipeline {
             steps {
                 sh '''
                     cd FlightReservationApplication
-                    docker build -t mayurwagh/flight-reservation:latest .
-                    docker push mayurwagh/flight-reservation:latest
-                    docker rmi mayurwagh/flight-reservation:latest
+                    docker build -t mayurwagh/flight-reservation12:latest .
+                    docker push mayurwagh/flight-reservation12:latest
+                    docker rmi mayurwagh/flight-reservation12:latest
                 '''
             }
         }
