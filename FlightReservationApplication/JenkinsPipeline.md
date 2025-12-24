@@ -48,7 +48,7 @@ apt install unzip -y
 unzip sonarqube-25.5.0.107428.zip
 mv sonarqube-25.5.0.107428 /opt/sonar
 cd /opt/sonar
-vim conf/sonar.properties
+   vim conf/sonar.properties
 >> sonar.jdbc.username=linux
 >> sonar.jdbc.password=redhat
 >> sonar.jdbc.url=jdbc:postgresql://localhost/sonarqube
