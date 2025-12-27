@@ -15,7 +15,7 @@ mysql -uroot -p
 >> create user linux identified by "Redhat";
 >> grant all privileges on *.* to linux;
 >> flush privileges;
->> create flightdb;
+>> create database flightdb;
 >> exit
 ```
 
