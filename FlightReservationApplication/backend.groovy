@@ -14,5 +14,35 @@ pipeline{
                 '''
             }
         }
+        stage('quality-check'){
+            steps{
+                withSonarQubeEnv(installationName: 'sonar', credentialsId: 'Sonar-token') {
+                    sh '''
+                     cd FlightReservationApplication
+                     mvn sonar:sonar -Dsonar.projectKey=flight-reservation
+                    '''
+                    }
+                        
+                }
+            }
+        stage('Dockerbuild'){
+            steps{
+                sh '''
+                    cd FlightReservationApplication
+                    docker build -t mayurwagh/fligh-reservation-pls14:latest .
+                    docker push mayurwagh/flight-reservation-pls14:latest
+                    docker rmi 'docker images list -aq'
+
+                '''
+            }
+        }
+        stage('Deploy'){
+            steps{
+                sh '''
+                cd FlightReservationApplication
+                kubectl apply -f k8s/
+                '''
+            }
+        }
+        }
     }
-}
