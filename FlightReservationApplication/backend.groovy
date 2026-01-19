@@ -6,5 +6,10 @@ pipeline{
                 git branch: 'main', url: 'https://github.com/mayurmwagh/flight-reservation-app.git'
             }
         }
+        stage('Code-build'){
+            steps{
+                sh 'mvn clean package'
+            }
+        }
     }
 }
