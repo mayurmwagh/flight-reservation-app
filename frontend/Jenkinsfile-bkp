@@ -1,0 +1,60 @@
+pipeline {
+    agent any
+    
+    environment {
+        AWS_CREDENTIALS = credentials('aws-cred')
+        S3_BUCKET = 'cbz-frontend-dev-buxxx'
+        AWS_REGION = 'eu-west-2'
+    //    NODE_VERSION = '18.x'
+    }
+    
+    stages {
+        stage('PULL') {
+            steps {
+                git branch: 'main', url: 'https://github.com/shubhamkalsait/Flight-reservation.git'
+            }
+        }
+        
+        stage('Install Dependencies') {
+            steps {
+                sh '''
+                    cd frontend
+                    npm install
+                '''
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                sh '''
+                    cd frontend
+                    npm run build
+                '''
+            }
+        }
+        
+        stage('S3 Deploy') {
+            steps {
+                withAWS(credentials: 'aws-cred', region: 'eu-west-2') {
+                    sh '''
+                     cd frontend
+                        aws s3 sync dist/ s3://${S3_BUCKET} --delete
+                       # aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION_ID} --paths "/*"
+                    '''
+                }
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo 'Frontend deployment completed successfully!'
+        }
+        failure {
+            echo 'Frontend deployment failed!'
+        }
+        always {
+            cleanWs()
+        }
+    }
+} 
