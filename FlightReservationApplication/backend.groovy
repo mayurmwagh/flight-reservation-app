@@ -31,7 +31,7 @@ pipeline{
                     cd FlightReservationApplication
                     docker build -t mayurwagh/fligh-reservation-pls14:latest .
                     docker push mayurwagh/flight-reservation-pls14:latest
-                    docker rmi 'docker images list -aq'
+                    docker rmi mayurwagh/flight-reservation-pls14:latest
 
                 '''
             }
