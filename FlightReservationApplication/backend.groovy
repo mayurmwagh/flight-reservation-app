@@ -9,7 +9,7 @@ pipeline{
         stage('Build'){
             steps{
                 sh '''
-                    cd FlightRerservationApplication
+                    cd FlightReservationApplication
                     mvn clean package
                 '''
             }
@@ -18,7 +18,7 @@ pipeline{
             steps{
                 withSonarQubeEnv(installationName: 'sonar', credentialsId: 'sonar-token') {
                   sh'''
-                     cd FlightRerservationApplication
+                     cd FlightReservationApplication
                      mvn soanr:sonar -Dsonar.projectKey=flight-reservation   
                   '''
                 }
@@ -27,7 +27,7 @@ pipeline{
         stage('Docker-build'){
             steps{
                 sh'''
-                    cd FlightRerservationApplication    
+                    cd FlightReservationApplication
                     docker build -t mayurwagh/flight-reservation-15-16:latest . 
                     docker push mayurwagh/flight-reservation-15-16:latest
                     docker rmi mayurwagh/flight-reservation-15-16:latest
@@ -37,7 +37,7 @@ pipeline{
         stage('Deploy'){
             steps{
                 sh'''
-                    cd FlightRerservationApplication    
+                    cd FlightReservationApplication   
                     kubectl apply -f k8s/
                 '''
             }
