@@ -5,6 +5,7 @@ pipeline{
             steps{
                 git branch: 'main', url: 'https://github.com/mayurmwagh/flight-reservation-app.git'
             }
+
         }
         stage('Code-Build'){
             steps{
@@ -13,36 +14,38 @@ pipeline{
                     mvn clean package
                 '''
             }
+
         }
-        stage('QA-test'){
+        stage('Code-Test'){
             steps{
-                withSonarQubeEnv(installationName: 'Sonar', credentialsId: 'sonar-token') {
+               withSonarQubeEnv(installationName: 'Sonar', credentialsId: 'sonar-token') {
                  sh '''
-                     cd FlightReservationApplication
-                     mvn sonar:sonar -Dsonar.projectKey=flight-reservation
+                    cd FlightReservationApplication
+                    mvn sonar:sonar -Dsonar.projectKey=flight-reservation
                  '''
                 }
             }
+
         }
         stage('Docker-Build'){
             steps{
                 sh '''
                     cd FlightReservationApplication
-                    docker build -t mayurwagh/flight-reservation-pls-17:latest . 
-                    docker push mayurwagh/flight-reservation-pls-17:latest
-                    docker rmi mayurwagh/flight-reservation-pls-17:latest
+                    docker build -t mayurwagh/flightreservation-pls17:latest .
+                    docker push mayurwagh/flightreservation-pls17:latest
+                    docker rmi mayurwagh/flightreservation-pls17:latest
 
                 '''
+                
             }
+
         }
         stage('Deploy'){
             steps{
                 sh '''
-                    cd FlightReservationApplication
                     kubectl apply -f k8s/
-                '''    
+                '''
             }
         }
-
     }
 }
